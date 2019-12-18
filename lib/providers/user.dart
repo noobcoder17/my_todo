@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import '../data/storage.dart';
 
-class UserProvider extends ChangeNotifier{
+class User extends ChangeNotifier{
   StoreData _storeData = new StoreData();
   bool _isNewUser;
 
