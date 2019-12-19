@@ -1,21 +1,21 @@
-import 'package:flutter/foundation.dart';
-import '../data/storage.dart';
+// import 'package:flutter/foundation.dart';
+// import '../data/storage.dart';
 
-class User extends ChangeNotifier{
-  StoreData _storeData = new StoreData();
-  bool _isNewUser;
+// class UserProvider extends ChangeNotifier{
+//   StoreData _storeData = new StoreData();
+//   bool _isNewUser;
 
-  bool get isNewUser {
-    return _isNewUser!=null;
-  }
+//   bool get isNewUser {
+//     return _isNewUser!=null;
+//   }
 
-  Future<bool> tryToGetData() async {
-    bool doesUserExists = await _storeData.fileExits();
-    if(doesUserExists==false){
-      return false;
-    }
-    _isNewUser = true;
-    notifyListeners();
-    return true;
-  }
-}
+//   Future<bool> tryToGetData() async {
+//     bool doesUserExists = await _storeData.fileExits();
+//     if(doesUserExists==false){
+//       return false;
+//     }
+//     _isNewUser = true;
+//     notifyListeners();
+//     return true;
+//   }
+// }

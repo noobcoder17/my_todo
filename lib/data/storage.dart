@@ -33,7 +33,16 @@ class StoreData {
     return file.readAsString();
   }
 
-  Future<File> postData(Map<String,dynamic> newJsonData) async {
+  Future<File> addType(String newType) async {
+    File dataFile = await getFile();
+    print("Storing in existing file");
+    String prevJsonData = await getData();
+    Map<String,dynamic> data = jsonDecode(prevJsonData);
+    data["types"].add(newType.toLowerCase());
+    return dataFile.writeAsString(jsonEncode(data));
+  }
+
+  Future<File> addTask(Map<String,dynamic> newJsonData) async {
     File dataFile = await getFile();
     print("Storing in existing file");
     String prevJsonData = await getData();
@@ -42,7 +51,7 @@ class StoreData {
     return dataFile.writeAsString(jsonEncode(data));
   }
   
-  Future<File> updateData(String key,Map<String,dynamic> newJsonData) async {
+  Future<File> updateTask(String key,Map<String,dynamic> newJsonData) async {
     File dataFile = await getFile();
     String prevJsonData = await getData();
     Map<String,dynamic> data = jsonDecode(prevJsonData);
@@ -51,7 +60,7 @@ class StoreData {
     return dataFile.writeAsString(jsonEncode(data));
   }
 
-  Future<File> deleteData(String key) async{
+  Future<File> deleteTask(String key) async{
     File dataFile = await getFile();
     String prevJsonData = await getData();
     Map<String,dynamic> data = jsonDecode(prevJsonData);

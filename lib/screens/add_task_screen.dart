@@ -17,8 +17,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Widget build(BuildContext context) {
     final randomizer = new Random(); 
     int x = randomizer.nextInt(100);
-    Task newTask = new Task(id: DateTime.now().toString(),name: "Task "+x.toString(),isDone: false,isStar: false);
-    final taskProvider = Provider.of<Tasks>(context);
+    Task newTask = new Task(id: DateTime.now().toString(),name: "Task "+x.toString(),type: "home",isDone: false);
+    final taskProvider = Provider.of<TasksProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Task"),

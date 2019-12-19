@@ -12,6 +12,7 @@ import './screens/add_task_screen.dart';
 //providers
 import './providers/tasks.dart';
 import './providers/user.dart';
+import 'package:my_todo/providers/home.dart';
 
 void main(){ 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -26,19 +27,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (ctx)=>Tasks(),),
-        ChangeNotifierProvider(create: (ctx)=>User(),),
+        ChangeNotifierProvider(create: (ctx)=>HomeProvider(),),
       ],
-      child: Consumer<User>(
-        builder: (context,userProvider,widget){
+      child: Consumer<HomeProvider>(
+        builder: (context,homeProvider,widget){
           return MaterialApp(
           debugShowCheckedModeBanner: false,
             title: 'My ToDo',
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: userProvider.isNewUser?  ToDo() : FutureBuilder(
-              future: userProvider.tryToGetData(),
+            home: homeProvider.isNewUser?  ToDo() : FutureBuilder(
+              future: homeProvider.tryToGetData(),
               builder: (context,result){
                 if(result.connectionState == ConnectionState.waiting){
                   return LoadingScreen();

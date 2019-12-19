@@ -3,9 +3,11 @@ import 'package:provider/provider.dart';
 
 //providers
 import '../providers/tasks.dart';
+import 'package:my_todo/providers/home.dart';
 
 //screen
 import './add_task_screen.dart';
+import './todo_app.dart';
 
 class NewUserScreen extends StatefulWidget {
   @override
@@ -20,9 +22,9 @@ class _NewUserScreenState extends State<NewUserScreen> {
       _isLoading = true;
     });
     try {
-      bool isCreated = await Provider.of<Tasks>(context).createNewUserData();
+      bool isCreated = await Provider.of<HomeProvider>(context).createNewUserData();
       if(isCreated){
-        Navigator.of(context).pushReplacementNamed(AddTaskScreen.routeName);
+        //Navigator.of(context).pushReplacementNamed(ToDo.routeName);
       }else{
         showDialog(
           context: context,

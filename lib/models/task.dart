@@ -5,22 +5,22 @@ import '../data/storage.dart';
 class Task extends ChangeNotifier {
   String id;
   String name;
+  String type;
   bool isDone;
-  bool isStar;
 
   Task({
-    this.id,
-    this.name,
-    this.isDone = false,
-    this.isStar = false
+    @required this.id,
+    @required this.name,
+    @required this.type,
+    @required this.isDone,
   });
 
   toJson(){
     return {
       'id' : id,
       'name' : name,
+      'type' : type,
       'isDone' : isDone,
-      'isStar' : isStar
     };
   }
 
@@ -30,7 +30,7 @@ class Task extends ChangeNotifier {
       Map<String,dynamic> newJsonData = {
         this.id : this.toJson()
       };
-      File success = await storage.updateData(this.id, newJsonData);
+      File success = await storage.updateTask(this.id, newJsonData);
       if(success!=null){
         return true;
       }
@@ -54,23 +54,6 @@ class Task extends ChangeNotifier {
     }catch(e){
       isDone = isDonePrev;
       print("${this.id} Task done update failed");
-    }
-    notifyListeners();
-  }
-
-  Future<void> toggleStar() async{
-    bool isStarPrev = isStar;
-    isStar = !isStar;
-    try{
-      bool updateSuccess = await updateTask();
-      if(updateSuccess){
-        print("Task star updated");
-      }else{
-        throw updateSuccess;
-      }
-    }catch(e){
-      isStar = isStarPrev;
-      print("${this.id} Task star update failed");
     }
     notifyListeners();
   }
