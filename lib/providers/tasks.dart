@@ -7,12 +7,14 @@ import '../data/storage.dart' ;
 class TasksProvider extends ChangeNotifier {
   StoreData storage = new StoreData();
   String _type;
+  int _done = 0;
   List<Task> _tasks = [];
 
   TasksProvider(String type,Map<String,dynamic> tasks){
     _type = type;
     Task tempTask;
     List<Task> tempList = [];
+    int _tempDone = 0;
     tasks.forEach((key,data){
       tempTask = new Task(
         id: data['id'].toString(),
@@ -20,13 +22,25 @@ class TasksProvider extends ChangeNotifier {
         type: data['type'].toString(),
         isDone: data['isDone']
       );
+      if(tempTask.isDone){
+        _tempDone +=1;
+      }
       tempList.add(tempTask);
     });
+    _done = _tempDone;
     _tasks = tempList;
   }
-
+  
   String get getType{
     return _type;
+  }
+
+  int get getTotalDone {
+    return _done;
+  }
+
+  int get getTotalTask {
+    return _tasks.length;
   }
 
   List<Task> get getTasks{

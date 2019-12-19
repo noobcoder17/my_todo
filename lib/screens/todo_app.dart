@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_todo/widgets/types_card.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/tasks.dart';
 import '../models/task.dart';
+//screens
 import './add_task_screen.dart';
+import './loading_screen.dart';
 
 //providers
 import '../providers/home.dart';
@@ -42,9 +45,12 @@ class _ToDoState extends State<ToDo> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+
     final homeProvider = Provider.of<HomeProvider>(context);
     List<TasksProvider> taskProviders = homeProvider.getTaskProviders;
-    return Scaffold(
+    return _isLoading ? LoadingScreen() : Scaffold(
       backgroundColor: Colors.blue,
       appBar: AppBar(
         centerTitle: true,
@@ -56,19 +62,14 @@ class _ToDoState extends State<ToDo> {
         itemBuilder: (cyx,i){
           return ChangeNotifierProvider.value(
             value: taskProviders[i],
-            child: ListTile(
-              // onLongPress: (){
-              //   taskProvider.removeTask(tasks[i].id);
-              // },
-              // leading: Text(tasks[i].name),
-              // trailing: Consumer<Task>(
-              //   builder: (ctx,task,widget){
-              //     return IconButton(
-              //       icon: task.isDone ? Icon(Icons.done,color: Colors.greenAccent,) : Icon(Icons.done,color: Colors.grey,),
-              //       onPressed: task.toggleDone,
-              //     );
-              //   },
-              // ),
+            child: Consumer<TasksProvider>(
+              builder: (ctx,task,widget){
+                return Column(
+                  children: <Widget>[
+                    TypesCard(height: height,width: width,),
+                  ],
+                );
+              },
             ),
           );
         },

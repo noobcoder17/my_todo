@@ -47,10 +47,14 @@ class HomeProvider extends ChangeNotifier {
 
         //assigning data
         _userName = data['userName'];
-        _types = data['types'];
-        print("ok");
+        List<String> tempTypes = [];
+        data['types'].forEach((dynamic type){
+          tempTypes.add(type.toString());
+        });
+        _types = tempTypes;
         List<TasksProvider> tempList = [];
         _types.forEach((type){
+          print("type:$type");
           Map<String,dynamic> _eachType = data['tasks'][type];
           TasksProvider _newTasksProvider = TasksProvider(type,_eachType);
           tempList.add(_newTasksProvider);
