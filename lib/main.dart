@@ -11,7 +11,6 @@ import './screens/add_task_screen.dart';
 
 //providers
 import './providers/tasks.dart';
-import './providers/user.dart';
 import 'package:my_todo/providers/home.dart';
 
 void main(){ 
