@@ -7,14 +7,12 @@ import '../data/storage.dart' ;
 class TasksProvider extends ChangeNotifier {
   StoreData storage = new StoreData();
   String _type;
-  int _done = 0;
   List<Task> _tasks = [];
 
   TasksProvider(String type,Map<String,dynamic> tasks){
     _type = type;
     Task tempTask;
     List<Task> tempList = [];
-    int _tempDone = 0;
     tasks.forEach((key,data){
       tempTask = new Task(
         id: data['id'].toString(),
@@ -22,12 +20,8 @@ class TasksProvider extends ChangeNotifier {
         type: data['type'].toString(),
         isDone: data['isDone']
       );
-      if(tempTask.isDone){
-        _tempDone +=1;
-      }
       tempList.add(tempTask);
     });
-    _done = _tempDone;
     _tasks = tempList;
   }
   
@@ -36,7 +30,13 @@ class TasksProvider extends ChangeNotifier {
   }
 
   int get getTotalDone {
-    return _done;
+    int _tempDone = 0;
+    _tasks.forEach((task){
+      if(task.isDone){
+        _tempDone +=1;
+      }
+    });
+    return _tempDone;
   }
 
   int get getTotalTask {
@@ -67,14 +67,50 @@ class TasksProvider extends ChangeNotifier {
     return false;
   }
 
-  Future<void> removeTask(String key) async {
+  Future<void> removeTask(String id) async {
     try{
-      await storage.deleteTask(key);
-      print("task deleted");
-      _tasks.removeWhere((task)=>task.id==key);
+      await storage.deleteTask(_type,id);
+      //print("task deleted");
+      _tasks.removeWhere((task)=>task.id==id);
       notifyListeners();
     }catch(e){
       print(e);
     }
+  }
+
+  Future<bool> updateTask(Task task) async {
+    try{
+      StoreData storage = new StoreData();
+      Map<String,dynamic> newJsonData = {
+        task.id : task.toJson()
+      };
+      File success = await storage.updateTask(_type,task.id,newJsonData);
+      if(success!=null){
+        return true;
+      }
+    }catch(e){
+      print(e);
+      return false;
+    }
+    return true;
+  } 
+
+  Future<void> toggleDone(String id) async {
+    int index = _tasks.indexWhere((task)=>task.id==id);
+    try{
+      Task tempTask = _tasks[index];
+      tempTask.isDone = !tempTask.isDone;
+      bool updateSuccess = await updateTask(tempTask);
+      if(updateSuccess){
+        //_tasks[index].isDone = !_tasks[index].isDone;
+        //print("$id Task done updated");
+        notifyListeners();
+      }else{
+        throw updateSuccess;
+      }
+    }catch(e){
+      print("$id Task done update failed");
+    }
+    notifyListeners();
   }
 }

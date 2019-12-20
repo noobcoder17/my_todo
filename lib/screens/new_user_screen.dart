@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 //providers
-import '../providers/tasks.dart';
 import 'package:my_todo/providers/home.dart';
 
 //screen
-import './add_task_screen.dart';
-import './todo_app.dart';
 
 class NewUserScreen extends StatefulWidget {
   @override

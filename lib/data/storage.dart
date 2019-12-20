@@ -62,20 +62,19 @@ class StoreData {
     return dataFile.writeAsString(jsonEncode(data));
   }
   
-  Future<File> updateTask(String key,Map<String,dynamic> newJsonData) async {
+  Future<File> updateTask(String type,String key,Map<String,dynamic> newJsonData) async {
     File dataFile = await getFile();
     String prevJsonData = await getData();
     Map<String,dynamic> data = jsonDecode(prevJsonData);
-    data.update(key,(dynamic value){return newJsonData[key];},ifAbsent: (){return newJsonData[key];});
-    //data[key] = newJsonData[key];
+    data['tasks'][type].update(key,(dynamic value){return newJsonData[key];},ifAbsent: (){return newJsonData[key];});
     return dataFile.writeAsString(jsonEncode(data));
   }
 
-  Future<File> deleteTask(String key) async{
+  Future<File> deleteTask(String type,String id) async{
     File dataFile = await getFile();
     String prevJsonData = await getData();
     Map<String,dynamic> data = jsonDecode(prevJsonData);
-    data.remove(key);
+    data['tasks'][type].remove(id);
     return dataFile.writeAsString(jsonEncode(data));
   }
 }

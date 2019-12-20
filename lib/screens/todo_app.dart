@@ -3,10 +3,7 @@ import 'package:my_todo/widgets/types_card.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../providers/tasks.dart';
-import '../models/task.dart';
 //screens
-import './add_task_screen.dart';
 import './loading_screen.dart';
 
 //providers
@@ -84,19 +81,20 @@ class _ToDoState extends State<ToDo> {
         itemCount: taskProviders.length,
         itemBuilder: (cyx,i){
           return SingleChildScrollView(
-                      child: Column(
+            child: Column(
               children: <Widget>[
                 ChangeNotifierProvider.value(
                   value: taskProviders[i],
                   child: Consumer<TasksProvider>(
-                    builder: (ctx,task,widget){
+                    builder: (ctx,tasks,widget){
                       return TypesCard(
                         height: height,
                         width: width,
-                        type: task.getType,
-                        done: task.getTotalDone,
-                        total: task.getTotalTask,
+                        type: tasks.getType,
+                        done: tasks.getTotalDone,
+                        total: tasks.getTotalTask,
                         deleteFunction : removeTypeCard,
+                        tasksProvider: taskProviders[i],
                       );
                     },
                   ),
@@ -176,6 +174,5 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => size;
 }

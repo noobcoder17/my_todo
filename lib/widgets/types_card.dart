@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+
+//providers
+import '../providers/tasks.dart';
+
+//screen
+import '../screens/todos_screen.dart';
+
 class TypesCard extends StatefulWidget {
   final double height;
   final double width;
@@ -7,6 +14,7 @@ class TypesCard extends StatefulWidget {
   final int done;
   final int total;
   final Function deleteFunction;
+  final TasksProvider tasksProvider;
 
   const TypesCard({
     Key key, 
@@ -15,7 +23,8 @@ class TypesCard extends StatefulWidget {
     this.type, 
     this.done, 
     this.total,
-    this.deleteFunction
+    this.deleteFunction,
+    this.tasksProvider
   }) : super(key: key);
 
   
@@ -24,55 +33,59 @@ class TypesCard extends StatefulWidget {
 }
 
 class _TypesCardState extends State<TypesCard> {
-  
-
   @override
   Widget build(BuildContext context) {
-    //final taskProvider = Provider.of<TasksProvider>(context);
-    return Container(
-      padding: EdgeInsets.fromLTRB(20, 20, 20, 40),
-      margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
-      height: widget.width*0.75*1.2,
-      width: widget.width*0.75,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            offset: Offset(0,6),
-            blurRadius: 4,
-            spreadRadius: 3
-          )
-        ]
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text("${widget.type}".toUpperCase(),style: TextStyle(fontSize: 25,color: Colors.black),),
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: (){
-                  widget.deleteFunction(widget.type);
-                }
-              )
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text("You have ${widget.total - widget.done} tasks.",style: TextStyle(fontSize: 17),),
-              SizedBox(height: 20,),
-              LinearProgressIndicator(
-                value: widget.total==0? 1 : widget.done==0? 0 : (widget.done/widget.total).toDouble(),
-              )
-            ],
-          )
-          //Text("${widget.total}"),
-        ],
+    int left = widget.total - widget.done;
+    return GestureDetector(
+      onTap: (){
+        Navigator.of(context).pushNamed(ToDosScreen.routeName,arguments:widget.tasksProvider);
+      },
+      child: Container(
+        padding: EdgeInsets.fromLTRB(20, 20, 20, 40),
+        margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+        height: widget.width*0.75*1.2,
+        width: widget.width*0.75,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              offset: Offset(0,6),
+              blurRadius: 4,
+              spreadRadius: 3
+            )
+          ]
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text("${widget.type}".toUpperCase(),style: TextStyle(fontSize: 25,color: Colors.black),),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: (){
+                    widget.deleteFunction(widget.type);
+                  }
+                )
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                left==0? Text("All tasks done",style: TextStyle(fontSize: 17),): left==1?
+                Text("You have $left task",style: TextStyle(fontSize: 17),): Text("You have $left tasks",style: TextStyle(fontSize: 17),) ,
+                SizedBox(height: 20,),
+                LinearProgressIndicator(
+                  value: widget.total==0? 1 : widget.done==0? 0 : (widget.done/widget.total).toDouble(),
+                )
+              ],
+            )
+            //Text("${widget.total}"),
+          ],
+        ),
       ),
     );
   }

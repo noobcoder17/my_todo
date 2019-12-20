@@ -8,9 +8,9 @@ import './screens/new_user_screen.dart';
 import './screens/loading_screen.dart';
 import './screens/todo_app.dart';
 import './screens/add_task_screen.dart';
+import './screens/todos_screen.dart';
 
 //providers
-import './providers/tasks.dart';
 import 'package:my_todo/providers/home.dart';
 
 void main(){ 
@@ -47,7 +47,8 @@ class MyApp extends StatelessWidget {
               },
             ),
             routes: {
-              AddTaskScreen.routeName:(ctx)=>AddTaskScreen()
+              AddTaskScreen.routeName:(ctx)=>AddTaskScreen(),
+              ToDosScreen.routeName:(ctx)=>ToDosScreen()
             },
           );
         },
