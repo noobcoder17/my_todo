@@ -15,7 +15,7 @@ class HomeProvider extends ChangeNotifier {
   bool _isNewUser;
   String _userName;
   List<String> _types = [];
-  List<TasksProvider> _taskProviders = [];
+  Map<String,TasksProvider> _taskProviders = {};
 
   bool get isNewUser {
     return _isNewUser!=null;
@@ -30,11 +30,53 @@ class HomeProvider extends ChangeNotifier {
   }
 
   List<TasksProvider> get getTaskProviders {
-    return [..._taskProviders];
+    List<TasksProvider> tempList = [];
+    _taskProviders.forEach((type,taskProvider){
+      tempList.add(taskProvider);
+    });
+    return tempList;
   }
 
-  Future<bool> addTask() async {
+  Future<bool> addTaskFromHome(String type,String taskName) async {
+    Task newTask = new Task(
+      id: DateTime.now().toString(),
+      name: taskName,
+      type: type,
+      isDone: false
+    );
+    TasksProvider tasksProvider = _taskProviders[type];
+    try {
+      bool success = await tasksProvider.addTask(newTask);
+      if(success){
+        print("Task added from home");
+        return true;
+      }else{
+        return false;
+      }
+    }catch(e){
+      print("Task adding failed");
+      print(e);
+      return false;
+    }
+  }
 
+  Future<bool> addType(String type) async{
+    try {
+      File newFile = await storage.addType(type.toLowerCase());
+      if(newFile!=null){
+        print("$type Type added");
+        _types.add(type.toLowerCase());
+        TasksProvider _newTasksProvider = TasksProvider(type,{});
+        _taskProviders.addAll({type:_newTasksProvider});
+        notifyListeners();
+        return true;
+      }
+    }catch(e){
+      print("Type adding failed");
+      print(e);
+      return false;
+    }
+    return false;
   }
 
 
@@ -52,12 +94,12 @@ class HomeProvider extends ChangeNotifier {
           tempTypes.add(type.toString());
         });
         _types = tempTypes;
-        List<TasksProvider> tempList = [];
+        Map<String,TasksProvider> tempList = {};
         _types.forEach((type){
           print("type:$type");
           Map<String,dynamic> _eachType = data['tasks'][type];
           TasksProvider _newTasksProvider = TasksProvider(type,_eachType);
-          tempList.add(_newTasksProvider);
+          tempList.addAll({type:_newTasksProvider});
         });
         _taskProviders = tempList;
       }
@@ -69,22 +111,6 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> addType(String type) async{
-    try {
-      File success = await storage.addType(type.toLowerCase());
-      if(success!=null){
-        print("$type Type added");
-        _types.add(type.toLowerCase());
-        notifyListeners();
-        return true;
-      }
-    }catch(e){
-      print("Type adding failed");
-      print(e);
-      return false;
-    }
-    return false;
-  }
 
   Future<bool> createNewUserData() async {
     Map<String,dynamic> newUserData = {

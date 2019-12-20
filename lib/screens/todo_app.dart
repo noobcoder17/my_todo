@@ -14,6 +14,7 @@ import '../providers/tasks.dart';
 
 //widgets
 import '../widgets/new_type_dialog.dart';
+import '../widgets/new_all_task_dialog.dart';
 
 class ToDo extends StatefulWidget {
   static const routeName = '/todo-screen';
@@ -58,19 +59,27 @@ class _ToDoState extends State<ToDo> {
         bottom: CustomAppBar(homeProvider.getUserName),
       ),
       body: ListView.builder(
+        padding: EdgeInsets.only(left: 20),
+        scrollDirection: Axis.horizontal,
         itemCount: taskProviders.length,
         itemBuilder: (cyx,i){
-          return ChangeNotifierProvider.value(
-            value: taskProviders[i],
-            child: Consumer<TasksProvider>(
-              builder: (ctx,task,widget){
-                return Column(
-                  children: <Widget>[
-                    TypesCard(height: height,width: width,),
-                  ],
-                );
-              },
-            ),
+          return Column(
+            children: <Widget>[
+              ChangeNotifierProvider.value(
+                value: taskProviders[i],
+                child: Consumer<TasksProvider>(
+                  builder: (ctx,task,widget){
+                    return TypesCard(
+                      height: height,
+                      width: width,
+                      type: task.getType,
+                      done: task.getTotalDone,
+                      total: task.getTotalTask,
+                    );
+                  },
+                ),
+              )
+            ],
           );
         },
       )
@@ -122,7 +131,12 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                       IconButton(
                         icon: Icon(Icons.add_circle_outline,color: Colors.white,),
                         onPressed: (){
-                          Navigator.of(context).pushNamed(AddTaskScreen.routeName);
+                          showDialog(
+                            context: context,
+                            builder: (context){
+                              return NewAllTaskDialog();
+                            }
+                          );
                         },
                       ),
                     ],

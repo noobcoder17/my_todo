@@ -39,15 +39,16 @@ class StoreData {
     String prevJsonData = await getData();
     Map<String,dynamic> data = jsonDecode(prevJsonData);
     data["types"].add(newType.toLowerCase());
+    data["tasks"].addAll({newType.toLowerCase():{}});
     return dataFile.writeAsString(jsonEncode(data));
   }
 
-  Future<File> addTask(Map<String,dynamic> newJsonData) async {
+  Future<File> addTask(String type,Map<String,dynamic> newJsonData) async {
     File dataFile = await getFile();
     print("Storing in existing file");
     String prevJsonData = await getData();
     Map<String,dynamic> data = jsonDecode(prevJsonData);
-    data["tasks"].addAll(newJsonData);
+    data["tasks"][type].addAll(newJsonData);
     return dataFile.writeAsString(jsonEncode(data));
   }
   
