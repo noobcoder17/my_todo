@@ -61,11 +61,15 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<bool> addType(String type) async{
+    int isAlready = _types.indexOf(type);
+    if(isAlready>=0){
+      return true;
+    }
     try {
-      File newFile = await storage.addType(type.toLowerCase());
+      File newFile = await storage.addType(type);
       if(newFile!=null){
         print("$type Type added");
-        _types.add(type.toLowerCase());
+        _types.add(type);
         TasksProvider _newTasksProvider = TasksProvider(type,{});
         _taskProviders.addAll({type:_newTasksProvider});
         notifyListeners();
@@ -77,6 +81,25 @@ class HomeProvider extends ChangeNotifier {
       return false;
     }
     return false;
+  }
+
+  Future<bool> deleteType(String type) async {
+    try{
+      File success = await storage.remoreType(type);
+      if(success!=null){
+        _taskProviders.remove(type);
+        _types.remove(type);
+        print("Type remove successful");
+        notifyListeners();
+        return true;
+      }else{
+        return false;
+      }
+    }catch(e){
+      print("Type remove failed");
+      print(e);
+      return false;
+    }
   }
 
 

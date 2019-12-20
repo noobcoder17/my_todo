@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 //providers
@@ -11,10 +12,17 @@ class NewAllTaskDialog extends StatefulWidget {
 }
 
 class _NewAllTaskDialogState extends State<NewAllTaskDialog> {
+ 
   final _form = GlobalKey<FormState>();
-  String _type = 'common';
+  String _type;
   String _taskName;
   bool _isLoading = false;
+
+   @override
+  void initState(){
+    super.initState();
+    _type = Provider.of<HomeProvider>(context,listen: false).getTypes[0];
+  }
 
   Future<void> _onSubmit() async{
     final isValid = _form.currentState.validate();
@@ -46,13 +54,13 @@ class _NewAllTaskDialogState extends State<NewAllTaskDialog> {
     _types.forEach((type){
       DropdownMenuItem<String> item = new DropdownMenuItem(
         value: type.toString(),
-        child: Text("$type"),
+        child: Text("$type".toUpperCase()),
       );
       _items.add(item);
     });
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-      title: Text("Add new task"),
+      title: Text("Add new task",style:GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.w600,fontSize: 20))),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -63,6 +71,7 @@ class _NewAllTaskDialogState extends State<NewAllTaskDialog> {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(
+                    labelText: "ToDo name",
                     border: OutlineInputBorder()
                   ),
                   autocorrect: true,
@@ -78,10 +87,12 @@ class _NewAllTaskDialogState extends State<NewAllTaskDialog> {
                     });
                   },
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 15,),
                 DropdownButtonFormField<String>(
                   decoration: InputDecoration(
-                    border: OutlineInputBorder()
+                    border: OutlineInputBorder(
+                      gapPadding: 0
+                    )
                   ),
                   value: _type,
                   items: _items,
@@ -98,13 +109,13 @@ class _NewAllTaskDialogState extends State<NewAllTaskDialog> {
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text("Cancel"),
+          child: Text("Cancel",style: GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.w500))),
           onPressed: (){
             Navigator.of(context).pop();
           },
         ),
-        RaisedButton(
-          child: _isLoading ? CircularProgressIndicator() : Text("Add"),
+        FlatButton(
+          child: _isLoading ? CircularProgressIndicator() : Text("Add",style: GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.w500)),),
           onPressed: (){
             _onSubmit();
           },

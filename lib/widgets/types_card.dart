@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-
 class TypesCard extends StatefulWidget {
   final double height;
   final double width;
   final String type;
   final int done;
   final int total;
+  final Function deleteFunction;
 
   const TypesCard({
     Key key, 
@@ -14,7 +14,8 @@ class TypesCard extends StatefulWidget {
     this.width, 
     this.type, 
     this.done, 
-    this.total
+    this.total,
+    this.deleteFunction
   }) : super(key: key);
 
   
@@ -23,6 +24,8 @@ class TypesCard extends StatefulWidget {
 }
 
 class _TypesCardState extends State<TypesCard> {
+  
+
   @override
   Widget build(BuildContext context) {
     //final taskProvider = Provider.of<TasksProvider>(context);
@@ -52,7 +55,9 @@ class _TypesCardState extends State<TypesCard> {
               Text("${widget.type}".toUpperCase(),style: TextStyle(fontSize: 25,color: Colors.black),),
               IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: (){},
+                onPressed: (){
+                  widget.deleteFunction(widget.type);
+                }
               )
             ],
           ),
@@ -62,7 +67,7 @@ class _TypesCardState extends State<TypesCard> {
               Text("You have ${widget.total - widget.done} tasks.",style: TextStyle(fontSize: 17),),
               SizedBox(height: 20,),
               LinearProgressIndicator(
-                value: 0.3,
+                value: widget.total==0? 1 : widget.done==0? 0 : (widget.done/widget.total).toDouble(),
               )
             ],
           )

@@ -38,8 +38,18 @@ class StoreData {
     print("Storing in existing file");
     String prevJsonData = await getData();
     Map<String,dynamic> data = jsonDecode(prevJsonData);
-    data["types"].add(newType.toLowerCase());
-    data["tasks"].addAll({newType.toLowerCase():{}});
+    data["types"].add(newType);
+    data["tasks"].addAll({newType:{}});
+    return dataFile.writeAsString(jsonEncode(data));
+  }
+
+   Future<File> remoreType(String type) async {
+    File dataFile = await getFile();
+    print("Storing in existing file");
+    String prevJsonData = await getData();
+    Map<String,dynamic> data = jsonDecode(prevJsonData);
+    data["types"].remove(type);
+    data["tasks"].remove(type);
     return dataFile.writeAsString(jsonEncode(data));
   }
 
