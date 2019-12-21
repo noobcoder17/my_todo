@@ -34,6 +34,7 @@ class TypesCard extends StatefulWidget {
 }
 
 class _TypesCardState extends State<TypesCard> {
+  final TextStyle style = GoogleFonts.poppins(textStyle: TextStyle(fontSize: 17,color: Colors.black));
   @override
   Widget build(BuildContext context) {
     int left = widget.total - widget.done;
@@ -76,8 +77,8 @@ class _TypesCardState extends State<TypesCard> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                left==0? Text("All tasks done",style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 17)),): left==1?
-                Text("You have $left task",style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 17)),): Text("You have $left tasks",style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 17)),) ,
+                left==0? Text("All Todos done",style: style,): left==1?
+                Text("You have $left Todo",style: style,): Text("You have $left Todos",style: style,) ,
                 SizedBox(height: 20,),
                 LinearProgressIndicator(
                   value: widget.total==0? 1 : widget.done==0? 0 : (widget.done/widget.total).toDouble(),

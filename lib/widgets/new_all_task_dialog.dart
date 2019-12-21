@@ -36,10 +36,10 @@ class _NewAllTaskDialogState extends State<NewAllTaskDialog> {
     try{
       bool success = await Provider.of<HomeProvider>(context).addTaskFromHome(_type, _taskName);
       if(success){
-        print("Add all task Dialog success, popping off");
+        //print("Add all task Dialog success, popping off");
       }
     }catch(e){
-      print(e);
+      //print(e);
     }
     setState(() {
       _isLoading = false;
@@ -60,7 +60,7 @@ class _NewAllTaskDialogState extends State<NewAllTaskDialog> {
     });
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      title: Text("Add new task",style:GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.w500,fontSize: 20))),
+      title: Text("Add new Todo",style:GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.w500,fontSize: 20))),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -71,7 +71,7 @@ class _NewAllTaskDialogState extends State<NewAllTaskDialog> {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: "ToDo name",
+                    hintText: "Todo name",
                     border: OutlineInputBorder()
                   ),
                   autocorrect: true,

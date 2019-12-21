@@ -22,7 +22,7 @@ class StoreData {
     File file = await getFile();
     bool isFileExits = await fileExits();
     if(isFileExits){
-      print("User file already exists");
+      //print("User file already exists");
       return file;
     }
     return file.writeAsString(jsonEncode(newUserData));
@@ -35,7 +35,7 @@ class StoreData {
 
   Future<File> addType(String newType) async {
     File dataFile = await getFile();
-    print("Storing in existing file");
+    //print("Storing in existing file");
     String prevJsonData = await getData();
     Map<String,dynamic> data = jsonDecode(prevJsonData);
     data["types"].add(newType);
@@ -45,7 +45,7 @@ class StoreData {
 
    Future<File> remoreType(String type) async {
     File dataFile = await getFile();
-    print("Storing in existing file");
+    //print("Storing in existing file");
     String prevJsonData = await getData();
     Map<String,dynamic> data = jsonDecode(prevJsonData);
     data["types"].remove(type);
@@ -55,7 +55,7 @@ class StoreData {
 
   Future<File> addTask(String type,Map<String,dynamic> newJsonData) async {
     File dataFile = await getFile();
-    print("Storing in existing file");
+    //print("Storing in existing file");
     String prevJsonData = await getData();
     Map<String,dynamic> data = jsonDecode(prevJsonData);
     data["tasks"][type].addAll(newJsonData);

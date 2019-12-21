@@ -48,14 +48,14 @@ class HomeProvider extends ChangeNotifier {
     try {
       bool success = await tasksProvider.addTask(newTask);
       if(success){
-        print("Task added from home");
+        //print("Task added from home");
         return true;
       }else{
         return false;
       }
     }catch(e){
-      print("Task adding failed");
-      print(e);
+      //print("Task adding failed");
+      //print(e);
       return false;
     }
   }
@@ -68,7 +68,7 @@ class HomeProvider extends ChangeNotifier {
     try {
       File newFile = await storage.addType(type);
       if(newFile!=null){
-        print("$type Type added");
+        //print("$type Type added");
         _types.add(type);
         TasksProvider _newTasksProvider = TasksProvider(type,{});
         _taskProviders.addAll({type:_newTasksProvider});
@@ -76,8 +76,8 @@ class HomeProvider extends ChangeNotifier {
         return true;
       }
     }catch(e){
-      print("Type adding failed");
-      print(e);
+      //print("Type adding failed");
+      //print(e);
       return false;
     }
     return false;
@@ -89,15 +89,15 @@ class HomeProvider extends ChangeNotifier {
       if(success!=null){
         _taskProviders.remove(type);
         _types.remove(type);
-        print("Type remove successful");
+        //print("Type remove successful");
         notifyListeners();
         return true;
       }else{
         return false;
       }
     }catch(e){
-      print("Type remove failed");
-      print(e);
+      //print("Type remove failed");
+      //print(e);
       return false;
     }
   }
@@ -119,18 +119,18 @@ class HomeProvider extends ChangeNotifier {
         _types = tempTypes;
         Map<String,TasksProvider> tempList = {};
         _types.forEach((type){
-          print("type:$type");
+          //print("type:$type");
           Map<String,dynamic> _eachType = data['tasks'][type];
           TasksProvider _newTasksProvider = TasksProvider(type,_eachType);
           tempList.addAll({type:_newTasksProvider});
         });
         _taskProviders = tempList;
       }
-      print("All initializatiion done");
+      //print("All initializatiion done");
       notifyListeners();
     }catch(e){
-      print("Initializatiion failed");
-      print(e);
+      //print("Initializatiion failed");
+      //print(e);
     }
   }
 
@@ -148,14 +148,14 @@ class HomeProvider extends ChangeNotifier {
     try{
       File success = await storage.createNewUserFile(newUserData);
       if(success!=null){
-        print("New User Created");
+        //print("New User Created");
         _isNewUser = true;
         notifyListeners();
         return true;
       }
     }catch(e){
-      print(e);
-      print("New User Creation failed");
+      //print(e);
+      //print("New User Creation failed");
       return false;
     }
     return false;

@@ -47,7 +47,7 @@ class _ToDoState extends State<ToDo> {
     try {
       await Provider.of<HomeProvider>(context,listen:false).initializeAllData(); 
     }catch(e){
-      print(e);
+      //print(e);
     }
     setState(() {
       _isLoading = false;
@@ -61,7 +61,7 @@ class _ToDoState extends State<ToDo> {
     try {
       await Provider.of<HomeProvider>(context).deleteType(type); 
     }catch(e){
-      print(e);
+      //print(e);
     }
     setState(() {
       _isListLoading = false;
@@ -86,6 +86,7 @@ class _ToDoState extends State<ToDo> {
       Center(child: Text("No ToDo",style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white,fontSize: 20),)))
       : _isListLoading ? Center(child: CircularProgressIndicator(backgroundColor: Colors.white,),) :  
       ListView.builder(
+        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.only(left: 20),
         scrollDirection: Axis.horizontal,
         itemCount: taskProviders.length,
@@ -149,6 +150,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                     children: <Widget>[
                       IconButton(
                         icon: Icon(Icons.assignment,color: Colors.white,),
+                        tooltip: "Add Type",
                         onPressed: (){
                           showDialog(
                             context: context,
@@ -160,12 +162,30 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                       ),
                       IconButton(
                         icon: Icon(Icons.add_circle_outline,color: Colors.white,),
+                        tooltip: "Add Todo",
                         onPressed: (){
                           if(_typeCount>=1){
                             showDialog(
                               context: context,
                               builder: (context){
                                 return NewAllTaskDialog();
+                              }
+                            );
+                          }else{
+                            showDialog(
+                              context: context,
+                              builder: (ctx){
+                                return AlertDialog(
+                                  title: Text("First add a type",style:GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.w500,fontSize: 20))),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text("Close",style: GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.w500))),
+                                      onPressed: (){
+                                        Navigator.of(context).pop();
+                                      },
+                                    )
+                                  ],
+                                );
                               }
                             );
                           }

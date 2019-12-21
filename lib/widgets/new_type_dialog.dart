@@ -42,10 +42,10 @@ class _NewTypeDialogState extends State<NewTypeDialog> {
     try{
       bool success = await Provider.of<HomeProvider>(context).addType(_type.toLowerCase());
       if(success){
-        print("Add Dialog success, popping off");
+        //print("Add Dialog success, popping off");
       }
     }catch(e){
-      print(e);
+      //print(e);
     }
     setState(() {
       _isLoading = false;

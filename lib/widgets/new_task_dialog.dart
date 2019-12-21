@@ -33,10 +33,10 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
     try{
       bool success = await widget.tasksProvider.addIndividualTask(_taskName);
       if(success){
-        print("Add Dialog success, popping off");
+        //print("Add Dialog success, popping off");
       }
     }catch(e){
-      print(e);
+      //print(e);
     }
     setState(() {
       _isLoading = false;
@@ -48,7 +48,7 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      title: Text("Add new ToDo",style:GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.w500,fontSize: 20))),
+      title: Text("Add new Todo",style:GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.w500,fontSize: 20))),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -57,7 +57,7 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
             child: TextFormField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: "ToDo name",
+                hintText: "Todo name",
               ),
               autocorrect: true,
               keyboardType: TextInputType.text,

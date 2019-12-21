@@ -95,8 +95,8 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            left==0? Text("All tasks done",style: style,): left==1?
-            Text("You have $left task",style: style,): Text("You have $left tasks",style: style,) ,
+            left==0? Text("All Todos done",style: style,): left==1?
+            Text("You have $left Todo",style: style,): Text("You have $left Todos",style: style,) ,
             SizedBox(height: 20,),
             LinearProgressIndicator(
               //backgroundColor: Colors.white30,

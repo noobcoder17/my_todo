@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import './screens/new_user_screen.dart';
 import './screens/loading_screen.dart';
 import './screens/todo_app.dart';
-import './screens/add_task_screen.dart';
 import './screens/todos_screen.dart';
 
 //providers
@@ -31,7 +30,8 @@ class MyApp extends StatelessWidget {
       child: Consumer<HomeProvider>(
         builder: (context,homeProvider,widget){
           return MaterialApp(
-          debugShowCheckedModeBanner: false,
+            color: Colors.white, 
+            debugShowCheckedModeBanner: false,
             title: 'My ToDo',
             theme: ThemeData(
               primarySwatch: Colors.blue,
@@ -47,7 +47,6 @@ class MyApp extends StatelessWidget {
               },
             ),
             routes: {
-              AddTaskScreen.routeName:(ctx)=>AddTaskScreen(),
               ToDosScreen.routeName:(ctx)=>ToDosScreen()
             },
           );

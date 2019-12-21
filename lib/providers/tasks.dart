@@ -55,13 +55,13 @@ class TasksProvider extends ChangeNotifier {
       File success = await storage.addTask(_type,newJsonData);
       if(success!=null){
         _tasks.add(newTask);
-        print("Task added in individual provider");
+        //print("Task added in individual provider");
         notifyListeners();
         return true;
       }
     }catch(e){
-      print("Task adding failed");
-      print(e);
+      //print("Task adding failed");
+      //print(e);
       return false;
     }
     return false;
@@ -82,13 +82,13 @@ class TasksProvider extends ChangeNotifier {
       File success = await storage.addTask(_type,newJsonData);
       if(success!=null){
         _tasks.add(newTask);
-        print("Task added in provider");
+        //print("Task added in provider");
         notifyListeners();
         return true;
       }
     }catch(e){
-      print("Task adding failed");
-      print(e);
+      //print("Task adding failed");
+      //print(e);
       return false;
     }
     return false;
@@ -101,7 +101,7 @@ class TasksProvider extends ChangeNotifier {
       _tasks.removeWhere((task)=>task.id==id);
       notifyListeners();
     }catch(e){
-      print(e);
+      //print(e);
     }
   }
 
@@ -116,7 +116,7 @@ class TasksProvider extends ChangeNotifier {
         return true;
       }
     }catch(e){
-      print(e);
+      //print(e);
       return false;
     }
     return true;
@@ -136,7 +136,7 @@ class TasksProvider extends ChangeNotifier {
         throw updateSuccess;
       }
     }catch(e){
-      print("$id Task done update failed");
+      //print("$id Task done update failed");
     }
     notifyListeners();
   }

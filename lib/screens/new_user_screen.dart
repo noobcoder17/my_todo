@@ -31,7 +31,7 @@ class _NewUserScreenState extends State<NewUserScreen> {
     try {
       bool isCreated = await Provider.of<HomeProvider>(context).createNewUserData(_userName);
       if(isCreated){
-        print("New User Created");
+        //print("New User Created");
         //Navigator.of(context).pushReplacementNamed(ToDo.routeName);
       }else{
         showDialog(
@@ -42,7 +42,7 @@ class _NewUserScreenState extends State<NewUserScreen> {
         ); 
       }
     }catch(e){
-      print(e);
+      //print(e);
     }
     setState(() {
       _isLoading = false;
