@@ -3,6 +3,7 @@ import 'package:my_todo/widgets/types_card.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 //screens
 import './loading_screen.dart';
 
@@ -14,6 +15,15 @@ import '../providers/tasks.dart';
 import '../widgets/new_type_dialog.dart';
 import '../widgets/new_all_task_dialog.dart';
 
+//values
+import '../values/values.dart' as values;
+
+
+int date = DateTime.now().day;
+int m = DateTime.now().month;
+String month = values.months[m];
+int year = DateTime.now().year;
+
 class ToDo extends StatefulWidget {
   static const routeName = '/todo-screen';
   @override
@@ -23,6 +33,7 @@ class ToDo extends StatefulWidget {
 class _ToDoState extends State<ToDo> {
   bool _isLoading = false;
   bool _isListLoading = false;
+  
   @override
   void initState(){
     super.initState();
@@ -61,7 +72,6 @@ class _ToDoState extends State<ToDo> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-
     final homeProvider = Provider.of<HomeProvider>(context);
     List<TasksProvider> taskProviders = homeProvider.getTaskProviders;
     return _isLoading ? LoadingScreen() : Scaffold(
@@ -69,11 +79,11 @@ class _ToDoState extends State<ToDo> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text("My Task",style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 17,fontWeight: FontWeight.w600))),
-        bottom: CustomAppBar(homeProvider.getUserName,homeProvider.getTypes.length),
+        title: Text("My ToDo",style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 17,fontWeight: FontWeight.w600))),
+        bottom: CustomAppBar(homeProvider.getUserName.split(" ")[0],homeProvider.getTypes.length),
       ),
       body: homeProvider.getTypes.length == 0 ? 
-      Center(child: Text("No tasks",style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white,fontSize: 20),)))
+      Center(child: Text("No ToDo",style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white,fontSize: 20),)))
       : _isListLoading ? Center(child: CircularProgressIndicator(backgroundColor: Colors.white,),) :  
       ListView.builder(
         padding: EdgeInsets.only(left: 20),
@@ -110,12 +120,9 @@ class _ToDoState extends State<ToDo> {
 
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
-  String _userName;
-  int _typeCount;
-  CustomAppBar(String userName,int x){
-    _userName = userName.split(" ")[0];
-    _typeCount = x;
-  }
+  final String _userName;
+  final int _typeCount;
+  CustomAppBar(this._userName,this._typeCount);
   final size = AppBar().preferredSize*2.5;
   @override
   Widget build(BuildContext context) {
@@ -137,7 +144,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text("Today : september 12, 2019".toUpperCase(),style: GoogleFonts.poppins(textStyle:TextStyle(color: Colors.white60,fontSize: 13)),textAlign: TextAlign.left,),
+                  Text("Today : $month $date, $year".toUpperCase(),style: GoogleFonts.poppins(textStyle:TextStyle(color: Colors.white60,fontSize: 13)),textAlign: TextAlign.left,),
                   Wrap(
                     children: <Widget>[
                       IconButton(

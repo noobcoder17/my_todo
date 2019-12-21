@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 //providers
@@ -63,9 +64,9 @@ class _TypesCardState extends State<TypesCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text("${widget.type}".toUpperCase(),style: TextStyle(fontSize: 25,color: Colors.black),),
+                Text("${widget.type}".toUpperCase(),style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 25,color: Colors.black)),),
                 IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: Icon(Icons.delete,size: 21,color: Colors.redAccent,),
                   onPressed: (){
                     widget.deleteFunction(widget.type);
                   }
@@ -75,8 +76,8 @@ class _TypesCardState extends State<TypesCard> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                left==0? Text("All tasks done",style: TextStyle(fontSize: 17),): left==1?
-                Text("You have $left task",style: TextStyle(fontSize: 17),): Text("You have $left tasks",style: TextStyle(fontSize: 17),) ,
+                left==0? Text("All tasks done",style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 17)),): left==1?
+                Text("You have $left task",style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 17)),): Text("You have $left tasks",style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 17)),) ,
                 SizedBox(height: 20,),
                 LinearProgressIndicator(
                   value: widget.total==0? 1 : widget.done==0? 0 : (widget.done/widget.total).toDouble(),

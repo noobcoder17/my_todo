@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 //providers
 import '../providers/tasks.dart';
 
+//widgets
+import '../widgets/new_task_dialog.dart';
+
 
 class ToDosScreen extends StatefulWidget {
   static const routeName = '/todos-screen';
@@ -28,6 +31,19 @@ class _ToDosScreenState extends State<ToDosScreen> {
                 done: tasks.getTotalDone,
                 total: tasks.getTotalTask,
               ),
+              actions: <Widget>[
+                 IconButton(
+                  icon: Icon(Icons.add_circle_outline,color: Colors.white,),
+                  onPressed: (){
+                    showDialog(
+                      context: context,
+                      builder: (context){
+                        return NewTaskDialog(tasksProvider: tasksProvider,);
+                      }
+                    );
+                  },
+                ),
+              ],
             ),
             body: ListView.builder(
               itemCount: tasks.getTotalTask,
@@ -39,9 +55,9 @@ class _ToDosScreenState extends State<ToDosScreen> {
                       tasksProvider.toggleDone(tasks.getTasks[i].id);
                     },
                   ),
-                  title: Text(tasks.getTasks[i].name,style: TextStyle(decoration: tasks.getTasks[i].isDone ? TextDecoration.lineThrough : null),),
+                  title: Text(tasks.getTasks[i].name,style: GoogleFonts.poppins(textStyle: TextStyle(decoration: tasks.getTasks[i].isDone ? TextDecoration.lineThrough : null, color: tasks.getTasks[i].isDone ?Colors.grey :Colors.black )),),
                   trailing: tasks.getTasks[i].isDone ? IconButton(
-                    icon: Icon(Icons.delete),
+                    icon: Icon(Icons.delete,size: 22,color: Colors.redAccent,),
                     onPressed: (){
                       tasksProvider.removeTask(tasks.getTasks[i].id);
                     },

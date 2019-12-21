@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../values/gradients.dart';
 
 import '../widgets/types_card.dart';
 
@@ -23,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: width,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: gradiants[0],
+            //colors: gradiants[0],
             begin: Alignment.topRight,
             end: Alignment.bottomLeft
           )

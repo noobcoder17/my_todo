@@ -67,6 +67,33 @@ class TasksProvider extends ChangeNotifier {
     return false;
   }
 
+  Future<bool> addIndividualTask(String taskName) async {
+    Task newTask = new Task(
+      id: DateTime.now().toString(),
+      name: taskName,
+      type: _type,
+      isDone: false
+    );
+    
+    Map<String,dynamic> newJsonData = {
+      newTask.id : newTask.toJson()
+    };
+    try {
+      File success = await storage.addTask(_type,newJsonData);
+      if(success!=null){
+        _tasks.add(newTask);
+        print("Task added in provider");
+        notifyListeners();
+        return true;
+      }
+    }catch(e){
+      print("Task adding failed");
+      print(e);
+      return false;
+    }
+    return false;
+  }
+
   Future<void> removeTask(String id) async {
     try{
       await storage.deleteTask(_type,id);

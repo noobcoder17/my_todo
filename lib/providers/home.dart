@@ -135,13 +135,13 @@ class HomeProvider extends ChangeNotifier {
   }
 
 
-  Future<bool> createNewUserData() async {
+  Future<bool> createNewUserData(String userName) async {
     Map<String,dynamic> newUserData = {
-      "userName" : "Akash Debnath",
+      "userName" : userName,
       "types" : ["common"],
       "tasks" : {
         "common" : {
-          DateTime.now().toString() : Task(id: DateTime.now().toString(),type: "common",name: "Common 1",isDone: false)
+          DateTime.now().toString() : Task(id: DateTime.now().toString(),type: "common",name: "Common Task 1",isDone: false)
         }
       }
     };

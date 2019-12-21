@@ -59,8 +59,8 @@ class _NewAllTaskDialogState extends State<NewAllTaskDialog> {
       _items.add(item);
     });
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-      title: Text("Add new task",style:GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.w600,fontSize: 20))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      title: Text("Add new task",style:GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.w500,fontSize: 20))),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -75,6 +75,8 @@ class _NewAllTaskDialogState extends State<NewAllTaskDialog> {
                     border: OutlineInputBorder()
                   ),
                   autocorrect: true,
+                  keyboardType: TextInputType.text,
+                  textCapitalization: TextCapitalization.sentences,
                   validator: (value){
                     if (value.isEmpty) {
                       return 'Please provide a value.';
