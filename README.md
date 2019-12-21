@@ -1,16 +1,24 @@
-# my_todo
+<h1 align="center">
+  <img src="readme_assets/ic_launcher.png" width="250" />
+  <br>⭐ My ToDo ⭐<br> 
+</h1>
+<h4 align="center">
+  <sub>Built with ❤︎ by
+  <a href="https://github.com/noobcoder17">Akash Debnath</a>
+</h4>
+<p>This is my second project on Flutter. This app hepls you to keep record of your ToDos. You can create your own category and save todos in then.It also shows how many todos are left in a specific category.</p>
+  
+<br>
+<p>In this project all the data are stored in <b>External Storage Directory</b> of the app in JSON format. I have used all Material Design. Only two packages are used - 1. <a href="https://pub.dev/packages/path_provider">Path Provider</a> 2. <a href="https://pub.dev/packages/provider">Provider</a>. Path Provider package is used to work with the local device storage and Provider package is used to handel State Management.</p>
 
-A new Flutter project.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<p align='center'>
+  <img src="readme_assets/1.jpg" width="250" />
+  <img src="readme_assets/2.jpg" width="250" />
+  <img src="readme_assets/3.jpg" width="250" /> 
+</p>
+<p align='center'>
+  <img src="readme_assets/4.jpg" width="250" />
+  <img src="readme_assets/5.jpg" width="250" />
+  <img src="readme_assets/6.jpg" width="250" /> 
+</p>
