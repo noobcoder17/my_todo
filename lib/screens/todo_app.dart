@@ -124,7 +124,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final String _userName;
   final int _typeCount;
   CustomAppBar(this._userName,this._typeCount);
-  final size = AppBar().preferredSize*2.5;
+  final size = AppBar().preferredSize*3;
   @override
   Widget build(BuildContext context) {
     return Container(
